@@ -34,8 +34,8 @@ def openTeams():
         locateClass()
     else:
         time.sleep(30)
-        pg.moveTo(20 , 16)
-        pg.moveTo(right-20 , bottom-16)
+        pg.moveTo(20 , 16,duration = 1)
+        pg.moveTo(right-20 , bottom-16,duration = 1)
         openTeams()
 
 
