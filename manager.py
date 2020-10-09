@@ -19,7 +19,12 @@ indices = [day for day in timeTable['Day']]
 classes.index = indices
 classes.index.name = 'Day'
 
-today = datetime.today().strftime('%A')
+hours = datetime.now().hour
+today = ''
+if int(hours)>18:
+    today = (datetime.today()+timedelta(days=1)).strftime('%A')
+else:
+    today = datetime.today().strftime('%A')
 
 
 def openTeams():
@@ -115,7 +120,7 @@ def isClassOpen():
     timeEnd = (datetime.today() +timedelta(hours = 1) - timedelta(minutes = minutes)).strftime('%I:%M %p')
     lectures = classes.loc[today]
     currentLec = lectures[lectures['Time']==(timeStart+'-'+timeEnd)]
-    
+
     return not currentLec.empty
 
 
