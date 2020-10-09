@@ -1,5 +1,6 @@
 import pyautogui as pg
 import os
+import sys
 import time
 import pandas as pd
 from pandas import DataFrame
@@ -10,6 +11,7 @@ pg.FAILSAFE = False
 filePath = 'open /Applications/Microsoft\ Teams.app'
 openingTime = 20   #seconds(max time)
 timeTable = pd.read_csv('timeTable.csv')
+minForDisconnect = 4
 
 right = pg.size().width
 bottom = pg.size().height
@@ -29,6 +31,10 @@ else:
 
 def openTeams():
     global today
+
+    if datetime.now().hour > 18 and datetime.now().second < 2:
+        print('y')
+        os.execv(sys.executable, ['python'] + [sys.argv[0]])
 
     if not isClassOpen():
         timeStart = (datetime.today() +timedelta(minutes = 3)).strftime('%I:%M %p')
@@ -66,8 +72,8 @@ def locateClass():
             time.sleep(30)
             locateClass()
     else:
-        timeStart = (datetime.today()+timedelta(minutes = 1)).strftime('%I:%M %p')
-        timeEnd = (datetime.now() + timedelta(hours = 1)+timedelta(minutes = 1)).strftime('%I:%M %p')
+        timeStart = (datetime.today()+timedelta(minutes = minForDisconnect)).strftime('%I:%M %p')
+        timeEnd = (datetime.now() + timedelta(hours = 1)+timedelta(minutes = minForDisconnect)).strftime('%I:%M %p')
         lectures = classes.loc[today]
         currentLec = lectures[lectures['Time']==(timeStart+'-'+timeEnd)]
         if not currentLec.empty:
