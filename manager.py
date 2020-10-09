@@ -9,7 +9,7 @@ pg.FAILSAFE = False
 
 filePath = 'open /Applications/Microsoft\ Teams.app'
 openingTime = 20   #seconds(max time)
-timeTable = pd.read_csv('test.csv')
+timeTable = pd.read_csv('timeTable.csv')
 
 right = pg.size().width
 bottom = pg.size().height
