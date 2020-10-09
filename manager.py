@@ -83,7 +83,7 @@ def locateClass():
 def openClass(className):
     pg.hotkey('tab')
     pg.hotkey('tab')
-    pg.write(className , interval = 0.15)
+    pg.write(className , interval = 0.08)
     pg.keyDown('shift')
     pg.press('down')
     pg.keyUp('shift')
