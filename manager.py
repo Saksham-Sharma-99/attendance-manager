@@ -159,7 +159,7 @@ def joinClass():
 def disconnectClass():
     pg.moveTo(right-80 , 16)
     pg.click(right-80 , 10)
-    for i in range(13):
+    for i in range(15):
         pg.hotkey('tab')
 
     time.sleep(0.25)

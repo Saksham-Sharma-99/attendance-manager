@@ -9,7 +9,7 @@ keep following things in mind
 
 Note:
 This program works on certain assumptions and only under those it will work properly
-1) classes should be pre-scheduled
+1) classes should be pre-scheduled , and are being recorded by the prof
 2) no reaction of any kind on any class should be there
 3) class should be scheduled on daily basis
 
