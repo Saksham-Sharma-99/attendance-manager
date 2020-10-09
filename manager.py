@@ -115,8 +115,7 @@ def isClassOpen():
     timeEnd = (datetime.today() +timedelta(hours = 1) - timedelta(minutes = minutes)).strftime('%I:%M %p')
     lectures = classes.loc[today]
     currentLec = lectures[lectures['Time']==(timeStart+'-'+timeEnd)]
-    if not currentLec.empty:
-        print(currentLec.loc[ today , 'Class_Name'] +' class is going on')
+    
     return not currentLec.empty
 
 
