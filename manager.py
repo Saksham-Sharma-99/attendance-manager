@@ -1,6 +1,7 @@
 import pyautogui as pg
 import os
 import sys
+from sys import platform
 import time
 import pandas as pd
 from pandas import DataFrame
@@ -23,7 +24,7 @@ classes.index.name = 'Day'
 
 hours = datetime.now().hour
 today = ''
-if int(hours)>18:
+if int(hours)>17:
     today = (datetime.today()+timedelta(days=1)).strftime('%A')
 else:
     today = datetime.today().strftime('%A')
@@ -60,6 +61,7 @@ def openTeams():
 
 def locateClass():
     global today
+    class_already_started()
     if not isClassOpen():
         timeStart = (datetime.today() +timedelta(minutes = 2)).strftime('%I:%M %p')
         timeEnd = (datetime.now() + timedelta(hours = 1) +timedelta(minutes = 2)).strftime('%I:%M %p')
@@ -102,22 +104,36 @@ def locateMeeting():
     time.sleep(10)
     pg.moveTo(right-80 , 16, duration = 1)
     pg.click(right-80 , 10)
-
-    time.sleep(0.25)
     for i in range(10):
         pg.hotkey('tab')
 
-    pg.hotkey('enter')
-    pg.hotkey('enter')
-    time.sleep(0.25)
-    pg.hotkey('tab')
-    time.sleep(0.25)
-    pg.hotkey('tab')
-    time.sleep(0.25)
+    if not class_already_started():
+        time.sleep(0.25)
+        pg.hotkey('enter')
+        pg.hotkey('enter')
+        time.sleep(0.25)
+        pg.hotkey('tab')
+        time.sleep(0.25)
+        pg.hotkey('tab')
+        time.sleep(0.25)
 
-    pg.hotkey('enter')
-    joinClass()
+        pg.hotkey('enter')
+        joinClass()
+    else:
+        pg.click()
 
+def class_already_started():
+    r = pg.locateCenterOnScreen('join_btn.png' , confidence = 0.9)
+
+    if r != None:
+        if platform == "darwin":
+            pg.moveTo(r.x/2 , r.y/2)
+            pg.click()
+        elif platform == "win32":
+            pg.moveTo(r.x , r.y)
+            pg.click()
+        return True
+    return False
 
 
 def isClassOpen():
@@ -163,13 +179,15 @@ def joinClass():
 
 
 def disconnectClass():
-    pg.moveTo(right-80 , 16)
-    pg.click(right-80 , 10)
-    for i in range(15):
-        pg.hotkey('tab')
+    r = pg.locateCenterOnScreen('join_btn.png' , confidence = 0.9)
 
-    time.sleep(0.25)
-    pg.hotkey('enter')
+    if r != None:
+        if platform == "darwin":
+            pg.moveTo(r.x/2 , r.y/2)
+            pg.click()
+        elif platform == "win32":
+            pg.moveTo(r.x , r.y)
+            pg.click()
     pg.moveTo(right-80 , 16)
     pg.click(right-80 , 10)
 
