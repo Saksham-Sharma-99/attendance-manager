@@ -61,7 +61,6 @@ def openTeams():
 
 def locateClass():
     global today
-    class_already_started()
     if not isClassOpen():
         timeStart = (datetime.today() +timedelta(minutes = 2)).strftime('%I:%M %p')
         timeEnd = (datetime.now() + timedelta(hours = 1) +timedelta(minutes = 2)).strftime('%I:%M %p')
@@ -104,10 +103,10 @@ def locateMeeting():
     time.sleep(10)
     pg.moveTo(right-80 , 16, duration = 1)
     pg.click(right-80 , 10)
-    for i in range(10):
-        pg.hotkey('tab')
 
     if not class_already_started():
+        for i in range(10):
+            pg.hotkey('tab')
         time.sleep(0.25)
         pg.hotkey('enter')
         pg.hotkey('enter')
@@ -121,6 +120,15 @@ def locateMeeting():
         joinClass()
     else:
         pg.click()
+        time.sleep(5)
+        for i in range(5):
+            pg.hotkey('tab')
+
+        time.sleep(0.25)
+        pg.hotkey('enter')
+        lectures = lectures[1:]
+
+
 
 def class_already_started():
     r = pg.locateCenterOnScreen('join_btn.png' , confidence = 0.9)
@@ -133,7 +141,10 @@ def class_already_started():
             pg.moveTo(r.x , r.y)
             pg.click()
         return True
-    return False
+    else:
+        return False
+
+
 
 
 def isClassOpen():
@@ -174,13 +185,11 @@ def joinClass():
     pg.hotkey('enter')
     lectures = lectures[1:]
     time.sleep(3)
-    isClassOpen()
 
 
 
 def disconnectClass():
-    r = pg.locateCenterOnScreen('join_btn.png' , confidence = 0.9)
-
+    r = pg.locateCenterOnScreen('disconnect.png' , confidence = 0.9)
     if r != None:
         if platform == "darwin":
             pg.moveTo(r.x/2 , r.y/2)
