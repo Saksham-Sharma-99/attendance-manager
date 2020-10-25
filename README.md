@@ -19,3 +19,11 @@ All you would need to change is the number of times 'tab' is pressed
 pyautogui source : https://github.com/asweigart/pyautogui
 
 feel free to contribute
+
+
+to run the prgoram do the following steps:
+1) cd over to the attendace manager folder
+2)pip install pyautogui
+3)pip install pandas
+4)export PYTHONPATH="${PYTHONPATH}:/usr/local/lib/python3.8/site-packages:/usr/lib/python3.8/site-packages"
+5)python manager.py
